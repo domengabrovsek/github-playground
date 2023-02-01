@@ -29,6 +29,7 @@ on:
 jobs:
   job-one:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environmentParam }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
