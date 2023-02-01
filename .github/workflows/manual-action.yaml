@@ -1,0 +1,49 @@
+name: Manual github action example
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      dropdownParam: 
+        type: choice
+        description: "Here are some choices"
+        options:
+          - Choice_one
+          - Choice_two
+          - Choice_three
+        required: true
+
+      stringParam:
+        type: string
+        description: "This is a text input"
+        default: ""
+      
+      booleanParam:
+        type: boolean
+        description: "This is a boolean input"
+
+      environmentParam:
+        type: environment
+        description: "This is an environment input"
+
+jobs:
+  job-one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18
+
+      - name: use cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+
